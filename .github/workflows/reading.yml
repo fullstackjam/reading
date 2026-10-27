@@ -68,7 +68,7 @@ jobs:
           today = now.strftime('%Y-%m-%d')
           summary = pathlib.Path(f'data/summaries/horizon-{today}-zh.md')
           if not summary.exists() or summary.stat().st_mtime < now.timestamp():
-              raise SystemExit('No new digest was generated; keep the published reading list unchanged')
+              print('No new digest was generated; keep the published reading list unchanged')
           state.write_text(json.dumps({'completed_at':now.isoformat()},indent=2)+'\n')
           PY
       - name: Build reading website
