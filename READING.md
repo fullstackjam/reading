@@ -33,6 +33,7 @@ uv run python -m http.server 8765 --directory public
 
 在 Actions 页面手动运行 `Reading list`，`refresh=true` 重新采集推荐，`false` 只重新发布网页。
 调整样式后 push `main` 只构建网页，不调用模型。
+`Finish Pages HTTPS` 是仅手动触发的一次性部署收尾作业，等待证书签发、启用 HTTPS 并检查首页；没有定时触发器，不调用模型。
 
 ## 已知边界
 

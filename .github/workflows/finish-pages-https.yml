@@ -1,0 +1,40 @@
+name: Finish Pages HTTPS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Enable HTTPS after GitHub finishes certificate provisioning
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess, time, urllib.request
+          endpoint = f"repos/{os.environ['GH_REPO']}/pages"
+          for attempt in range(36):
+              result = subprocess.run(['gh','api',endpoint],capture_output=True,text=True,check=True)
+              status = json.loads(result.stdout)
+              certificate = status.get('https_certificate') or {}
+              print(f"Check {attempt+1}/36: certificate={certificate.get('state', 'pending')}",flush=True)
+              if certificate.get('state') == 'approved':
+                  subprocess.run(['gh','api','--method','PUT',endpoint,'-F','https_enforced=true'],check=True)
+                  with urllib.request.urlopen('https://reading.fullstackjam.com/',timeout=30) as response:
+                      body = response.read().decode()
+                      if response.status == 200 and "Jam's Reading List" in body:
+                          print('HTTPS verified: 200 OK; reading list content present',flush=True)
+                          break
+                  raise SystemExit('HTTPS returned unexpected content')
+              if attempt < 35:
+                  time.sleep(60)
+          else:
+              raise SystemExit('GitHub certificate is still pending after 35 minutes')
+          PY
