@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "temperature": 0.3,
+    "max_tokens": 8192,
+    "analysis_concurrency": 3,
+    "enrichment_concurrency": 3,
+    "languages": ["zh"]
+  },
+  "sources": {
+    "hackernews": {"enabled": false},
+    "reddit": {"enabled": false},
+    "telegram": {"enabled": false},
+    "ossinsight": {"enabled": false},
+    "rss": [
+      {"name": "Netflix TechBlog", "url": "https://netflixtechblog.com/feed", "category": "engineering", "profile": "reading", "content_extractor": "trafilatura"},
+      {"name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/", "category": "engineering", "profile": "reading", "content_extractor": "trafilatura"},
+      {"name": "Another Dayu", "url": "https://anotherdayu.com/feed/", "category": "life", "profile": "reading", "content_extractor": "trafilatura"},
+      {"name": "胡涂说", "url": "https://hutusi.com/feed.xml", "category": "life", "profile": "reading", "content_extractor": "trafilatura"},
+      {"name": "Linmi", "url": "https://linmi.cc/feed", "category": "life", "profile": "reading", "content_extractor": "trafilatura"},
+      {"name": "OneV's Den", "url": "https://onevcat.com/feed.xml", "category": "engineering", "profile": "reading", "content_extractor": "trafilatura"}
+    ]
+  },
+  "collection": {"time_window_hours": 168},
+  "processing": {
+    "profiles_dir": "profiles",
+    "default_profile": "reading",
+    "profile_settings": {"reading": {"threshold": 7.5, "topic_dedup": false}}
+  },
+  "digest": {
+    "max_items": 5,
+    "profile_order": ["reading"],
+    "category_groups": {
+      "engineering": {"limit": 3, "categories": ["engineering"]},
+      "life": {"limit": 3, "categories": ["life"]}
+    }
+  },
+  "display": {"icon_style": "ascii"}
+}
