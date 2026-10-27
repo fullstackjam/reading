@@ -37,6 +37,8 @@ def build(summaries: Path, output: Path, state: Path) -> int:
             continue
         date = match[1]
         text = source.read_text(encoding="utf-8")
+        text = text.replace("&\\#x27;", "'")
+        text = re.sub(r"(\*\*[^\n]+\*\*)\n(?=1\. )", r"\1\n\n", text)
         text = re.sub(r"\A# [^\n]+\n", "", text)
         text = re.sub(r"从 (\d+) 条内容中筛选出 (\d+) 条重要资讯。", r"从 \1 篇候选中选出 \2 篇值得读的文章。", text)
         body = '<article>' + markdown.markdown(text, extensions=["extra", "sane_lists"]) + '</article>'
