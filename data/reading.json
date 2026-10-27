@@ -8,35 +8,368 @@
     "max_tokens": 8192,
     "analysis_concurrency": 3,
     "enrichment_concurrency": 3,
-    "languages": ["zh"]
-  },
-  "sources": {
-    "hackernews": {"enabled": false},
-    "reddit": {"enabled": false},
-    "telegram": {"enabled": false},
-    "ossinsight": {"enabled": false},
-    "rss": [
-      {"name": "Netflix TechBlog", "url": "https://netflixtechblog.com/feed", "category": "engineering", "profile": "reading", "content_extractor": "trafilatura"},
-      {"name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/", "category": "engineering", "profile": "reading", "content_extractor": "trafilatura"},
-      {"name": "Another Dayu", "url": "https://anotherdayu.com/feed/", "category": "life", "profile": "reading", "content_extractor": "trafilatura"},
-      {"name": "胡涂说", "url": "https://hutusi.com/feed.xml", "category": "life", "profile": "reading", "content_extractor": "trafilatura"},
-      {"name": "Linmi", "url": "https://linmi.cc/feed", "category": "life", "profile": "reading", "content_extractor": "trafilatura"},
-      {"name": "OneV's Den", "url": "https://onevcat.com/feed.xml", "category": "engineering", "profile": "reading", "content_extractor": "trafilatura"}
+    "languages": [
+      "zh"
     ]
   },
-  "collection": {"time_window_hours": 168},
+  "sources": {
+    "hackernews": {
+      "enabled": false
+    },
+    "reddit": {
+      "enabled": false
+    },
+    "telegram": {
+      "enabled": false
+    },
+    "ossinsight": {
+      "enabled": false
+    },
+    "rss": [
+      {
+        "name": "Frost's Blog",
+        "url": "https://frostming.com/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "编程工具 | 酷 壳 - CoolShell",
+        "url": "http://coolshell.cn/category/tools/feed",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Ivan on Containers, Kubernetes, and Server-Side",
+        "url": "https://iximiuz.com/feed.rss",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "伪架构师",
+        "url": "https://blog.fleeto.us/rss.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Application Security",
+        "url": "http://www.idontplaydarts.com/feed/",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Anonymous' Blog",
+        "url": "https://huweicai.com/archives/index.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Uber Engineering Blog",
+        "url": "https://rsshub.app/uber/blog",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "二分电台",
+        "url": "https://binary.2bab.me/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "卡瓦邦噶！",
+        "url": "http://www.kawabangga.com/feed",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Limboy's Essays",
+        "url": "http://feeds.feedburner.com/lzyy",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Anthropic Engineering Blog",
+        "url": "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_engineering.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "捕蛇者说",
+        "url": "https://pythonhunter.org/episodes/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "piglei",
+        "url": "http://www.zlovezl.cn/feeds/latest/",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Nerderati",
+        "url": "http://nerderati.com/atom.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "EAimTY's Blog",
+        "url": "https://www.eaimty.com/rss.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Hawstein - Blog",
+        "url": "http://hawstein.com/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Blogs on Alex Gaynor",
+        "url": "https://alexgaynor.net/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Wesley Aptekar-Cassels",
+        "url": "http://blog.wesleyac.com/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "icyleaf",
+        "url": "https://icyleaf.com/index.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "逍遥客",
+        "url": "https://11010.net/index.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Scott's Weblog",
+        "url": "https://blog.scottlowe.org/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Xe Iaso's blog",
+        "url": "https://xeiaso.net/blog.rss",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "plantegg",
+        "url": "https://plantegg.github.io/atom.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "HashiCorp Solutions Engineering Blog - Medium",
+        "url": "https://medium.com/feed/hashicorp-engineering",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Netflix TechBlog - Medium",
+        "url": "https://netflixtechblog.com/feed",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Hixie's Natural Log",
+        "url": "http://ln.hixie.ch/rss/html",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "胡涂说",
+        "url": "https://hutusi.com/feed.xml",
+        "category": "life",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Google SRE Prodcast",
+        "url": "https://feeds.libsyn.com/407036",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "OneV's Den",
+        "url": "https://onevcat.com/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "WY'Blogs",
+        "url": "https://cloudmessage.top/feed/",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Hamhire Tech Tips",
+        "url": "https://hamhire.tech/index.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "二丫讲梵",
+        "url": "https://wiki.eryajf.net/rss.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "man7.org",
+        "url": "http://blog.man7.org/feeds/posts/default?alt=rss",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Cloudflare Blog",
+        "url": "https://blog.cloudflare.com/rss/",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Brendan Gregg's Blog",
+        "url": "http://www.brendangregg.com/blog/rss.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "潮流周刊",
+        "url": "https://weekly.tw93.fun/rss.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "云原生实验室",
+        "url": "https://icloudnative.io/index.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "面向信仰编程",
+        "url": "https://draveness.me/feed.xml",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Another Dayu",
+        "url": "https://anotherdayu.com/feed/",
+        "category": "engineering",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Linmi",
+        "url": "https://linmi.cc/feed",
+        "category": "life",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Simon's Blog",
+        "url": "https://japan.typlog.io/feed.xml",
+        "category": "life",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "代码之外 Beyond Code",
+        "url": "https://feed.xyzfm.space/nfm8cu8deycn",
+        "category": "life",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "Stdio's Blog",
+        "url": "https://blog.stdioa.com/atom.xml",
+        "category": "life",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      },
+      {
+        "name": "数字移民",
+        "url": "https://digitalimmigrant.org/feed",
+        "category": "life",
+        "profile": "reading",
+        "content_extractor": "trafilatura"
+      }
+    ]
+  },
+  "collection": {
+    "time_window_hours": 168
+  },
   "processing": {
     "profiles_dir": "profiles",
     "default_profile": "reading",
-    "profile_settings": {"reading": {"threshold": 7.5, "topic_dedup": false}}
+    "profile_settings": {
+      "reading": {
+        "threshold": 7.5,
+        "topic_dedup": false
+      }
+    }
   },
   "digest": {
     "max_items": 5,
-    "profile_order": ["reading"],
+    "profile_order": [
+      "reading"
+    ],
     "category_groups": {
-      "engineering": {"limit": 3, "categories": ["engineering"]},
-      "life": {"limit": 3, "categories": ["life"]}
+      "engineering": {
+        "limit": 3,
+        "categories": [
+          "engineering"
+        ]
+      },
+      "life": {
+        "limit": 3,
+        "categories": [
+          "life"
+        ]
+      }
     }
   },
-  "display": {"icon_style": "ascii"}
+  "display": {
+    "icon_style": "ascii"
+  }
 }
