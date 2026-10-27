@@ -64,10 +64,18 @@ jobs:
           if state.exists():
               last = datetime.datetime.fromisoformat(json.loads(state.read_text())['completed_at'])
               hours = max(1, math.ceil((now-last).total_seconds()/3600))
-          subprocess.run(['uv','run','horizon','--config','data/reading.json','--hours',str(hours)],check=True)
           today = now.strftime('%Y-%m-%d')
           summary = pathlib.Path(f'data/summaries/horizon-{today}-zh.md')
-          if not summary.exists() or summary.stat().st_mtime < now.timestamp():
+          previous = summary.read_text() if summary.exists() else None
+          subprocess.run(['uv','run','horizon','--config','data/reading.json','--hours',str(hours)],check=True)
+          empty_marker = '但没有达到重要性阈值的条目。'
+          if summary.exists() and empty_marker in summary.read_text():
+              if previous and empty_marker not in previous:
+                  summary.write_text(previous)
+              else:
+                  summary.unlink()
+              print('No articles passed the threshold; keep the existing reading lists')
+          elif not summary.exists() or summary.stat().st_mtime < now.timestamp():
               print('No new digest was generated; keep the published reading list unchanged')
           state.write_text(json.dumps({'completed_at':now.isoformat()},indent=2)+'\n')
           PY
