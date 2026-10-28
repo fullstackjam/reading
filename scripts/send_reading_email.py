@@ -15,7 +15,7 @@ from src.ai.markdown_utils import clean_app_summary_markdown
 
 
 SITE_URL = "https://reading.fullstackjam.com"
-SENDER = "Jam's Reading List <no-reply@fullstackjam.com>"
+SENDER_NAME = "Jam's Reading List"
 EMPTY_MARKER = "但没有达到重要性阈值的条目。"
 
 
@@ -27,7 +27,7 @@ def latest_summary(directory: Path) -> Path | None:
     return summaries[-1] if summaries else None
 
 
-def email_payload(summary: Path, recipient: str) -> dict:
+def email_payload(summary: Path, recipient: str, sender: str) -> dict:
     date = summary.name.removeprefix("horizon-").removesuffix("-zh.md")
     content = summary.read_text(encoding="utf-8")
     content = re.sub(r"\A---\s*\n.*?\n---\s*\n", "", content, count=1, flags=re.DOTALL)
@@ -36,7 +36,7 @@ def email_payload(summary: Path, recipient: str) -> dict:
     text = f"{content.strip()}\n\n查看本期清单：{link}\n"
     body = markdown.markdown(html.escape(content), extensions=["extra", "sane_lists"])
     return {
-        "from": SENDER,
+        "from": f"{SENDER_NAME} <{sender}>",
         "to": [recipient],
         "subject": f"本期值得读 · {date}",
         "text": text,
@@ -54,6 +54,7 @@ def send_reading_email(
     history: Path,
     *,
     recipient: str,
+    sender: str,
     api_key: str,
     preview: Path | None = None,
 ) -> str:
@@ -63,12 +64,12 @@ def send_reading_email(
     previous = history / summary.name
     if preview is None and previous.exists() and previous.read_bytes() == summary.read_bytes():
         return "No new reading list; email skipped"
-    payload = email_payload(summary, recipient)
+    payload = email_payload(summary, recipient, sender)
     if preview is not None:
         preview.write_text(payload["html"], encoding="utf-8")
         return f"Email preview written to {preview}; no email sent"
-    if not api_key or not recipient:
-        raise ValueError("RESEND_API_KEY and READING_EMAIL_TO are required")
+    if not api_key or not recipient or not sender:
+        raise ValueError("RESEND_API_KEY, READING_EMAIL_TO and READING_EMAIL_FROM are required")
     fingerprint = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
     response = httpx.post(
         "https://api.resend.com/emails",
@@ -94,6 +95,7 @@ def main() -> None:
         args.summaries,
         args.history,
         recipient=os.environ.get("READING_EMAIL_TO", ""),
+        sender=os.environ.get("READING_EMAIL_FROM", ""),
         api_key=os.environ.get("RESEND_API_KEY", ""),
         preview=args.preview,
     ))

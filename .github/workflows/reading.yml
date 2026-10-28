@@ -94,9 +94,10 @@ jobs:
         if: steps.generate.outcome == 'success'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          READING_EMAIL_TO: ${{ secrets.READING_EMAIL_TO }}
+          READING_EMAIL_TO: ${{ vars.READING_EMAIL_TO }}
+          READING_EMAIL_FROM: ${{ vars.READING_EMAIL_FROM }}
         run: |
-          if [ -z "$RESEND_API_KEY" ] || [ -z "$READING_EMAIL_TO" ]; then
+          if [ -z "$RESEND_API_KEY" ] || [ -z "$READING_EMAIL_TO" ] || [ -z "$READING_EMAIL_FROM" ]; then
             echo 'Reading email is not configured; skipping delivery'
             exit 0
           fi
