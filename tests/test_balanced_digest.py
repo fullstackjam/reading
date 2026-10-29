@@ -284,6 +284,7 @@ def test_rejects_settings_for_unknown_profile() -> None:
 
 
 def test_appends_profiles_missing_from_configured_order() -> None:
+    configured_order = ["tech-blog", "tech-news"]
     config = Config(
         ai=AIConfig(
             provider="openai",
@@ -291,17 +292,14 @@ def test_appends_profiles_missing_from_configured_order() -> None:
             api_key_env="TEST_API_KEY",
         ),
         sources=SourcesConfig(),
-        digest=DigestConfig(profile_order=["tech-news", "tech-blog"]),
+        digest=DigestConfig(profile_order=list(configured_order)),
     )
 
-    HorizonOrchestrator(config, SimpleNamespace())
+    orchestrator = HorizonOrchestrator(config, SimpleNamespace())
 
-    assert config.digest.profile_order == [
-        "tech-news",
-        "tech-blog",
-        "ai-creator",
-        "finance-news",
-    ]
+    assert config.digest.profile_order[:len(configured_order)] == configured_order
+    assert set(config.digest.profile_order) == orchestrator.profiles.ids
+    assert len(config.digest.profile_order) == len(orchestrator.profiles.ids)
 
 
 def test_rejects_unknown_profile_order() -> None:
