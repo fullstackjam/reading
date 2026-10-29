@@ -34,13 +34,6 @@
         "content_extractor": "trafilatura"
       },
       {
-        "name": "编程工具 | 酷 壳 - CoolShell",
-        "url": "http://coolshell.cn/category/tools/feed",
-        "category": "engineering",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
         "name": "Ivan on Containers, Kubernetes, and Server-Side",
         "url": "https://iximiuz.com/feed.rss",
         "category": "engineering",
@@ -55,22 +48,8 @@
         "content_extractor": "trafilatura"
       },
       {
-        "name": "Application Security",
-        "url": "http://www.idontplaydarts.com/feed/",
-        "category": "engineering",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
         "name": "Anonymous' Blog",
         "url": "https://huweicai.com/archives/index.xml",
-        "category": "engineering",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "Uber Engineering Blog",
-        "url": "https://rsshub.app/uber/blog",
         "category": "engineering",
         "profile": "reading",
         "content_extractor": "trafilatura"
@@ -106,13 +85,6 @@
       {
         "name": "捕蛇者说",
         "url": "https://pythonhunter.org/episodes/feed.xml",
-        "category": "engineering",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "piglei",
-        "url": "http://www.zlovezl.cn/feeds/latest/",
         "category": "engineering",
         "profile": "reading",
         "content_extractor": "trafilatura"
@@ -181,13 +153,6 @@
         "content_extractor": "trafilatura"
       },
       {
-        "name": "plantegg",
-        "url": "https://plantegg.github.io/atom.xml",
-        "category": "engineering",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
         "name": "HashiCorp Solutions Engineering Blog - Medium",
         "url": "https://medium.com/feed/hashicorp-engineering",
         "category": "engineering",
@@ -225,13 +190,6 @@
       {
         "name": "OneV's Den",
         "url": "https://onevcat.com/feed.xml",
-        "category": "engineering",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "WY'Blogs",
-        "url": "https://cloudmessage.top/feed/",
         "category": "engineering",
         "profile": "reading",
         "content_extractor": "trafilatura"
@@ -323,13 +281,6 @@
       {
         "name": "Stdio's Blog",
         "url": "https://blog.stdioa.com/atom.xml",
-        "category": "life",
-        "profile": "reading",
-        "content_extractor": "trafilatura"
-      },
-      {
-        "name": "数字移民",
-        "url": "https://digitalimmigrant.org/feed",
         "category": "life",
         "profile": "reading",
         "content_extractor": "trafilatura"
