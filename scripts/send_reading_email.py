@@ -57,12 +57,13 @@ def send_reading_email(
     sender: str,
     api_key: str,
     preview: Path | None = None,
+    resend_id: str = "",
 ) -> str:
     summary = latest_summary(summaries)
     if summary is None or EMPTY_MARKER in summary.read_text(encoding="utf-8"):
         return "No reading list to send"
     previous = history / summary.name
-    if preview is None and previous.exists() and previous.read_bytes() == summary.read_bytes():
+    if preview is None and not resend_id and previous.exists() and previous.read_bytes() == summary.read_bytes():
         return "No new reading list; email skipped"
     payload = email_payload(summary, recipient, sender)
     if preview is not None:
@@ -70,7 +71,10 @@ def send_reading_email(
         return f"Email preview written to {preview}; no email sent"
     if not api_key or not recipient or not sender:
         raise ValueError("RESEND_API_KEY, READING_EMAIL_TO and READING_EMAIL_FROM are required")
-    fingerprint = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+    delivery = json.dumps(payload, sort_keys=True)
+    if resend_id:
+        delivery += f"\nresend:{resend_id}"
+    fingerprint = hashlib.sha256(delivery.encode()).hexdigest()
     response = httpx.post(
         "https://api.resend.com/emails",
         headers={
@@ -90,6 +94,7 @@ def main() -> None:
     parser.add_argument("--summaries", type=Path, default=Path("public/summaries"))
     parser.add_argument("--history", type=Path, default=Path(".reading-history/summaries"))
     parser.add_argument("--preview", type=Path, help="Write HTML without sending an email")
+    parser.add_argument("--resend-id", default="", help="Explicitly resend the latest list using a stable delivery ID, such as an Actions run ID")
     args = parser.parse_args()
     print(send_reading_email(
         args.summaries,
@@ -98,6 +103,7 @@ def main() -> None:
         sender=os.environ.get("READING_EMAIL_FROM", ""),
         api_key=os.environ.get("RESEND_API_KEY", ""),
         preview=args.preview,
+        resend_id=args.resend_id,
     ))
 
 

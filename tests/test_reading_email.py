@@ -84,6 +84,38 @@ def test_missing_credentials_or_provider_failure_is_not_reported_as_success(summ
         send_reading_email(current, history, recipient="reader@example.com", sender="news@example.com", api_key="test-key")
 
 
+def test_explicit_resend_sends_unchanged_list_and_deduplicates_retries(summaries, monkeypatch):
+    current, history = summaries
+    name = "horizon-2026-10-27-zh.md"
+    for directory in (current, history):
+        (directory / name).write_text("# Existing reading list")
+    requests = []
+
+    def accept(url, **kwargs):
+        requests.append(kwargs)
+        return httpx.Response(200, json={"id": "resent-message"}, request=httpx.Request("POST", url))
+
+    monkeypatch.setattr(httpx, "post", accept)
+    for run_id in ("run-1", "run-1", "run-2"):
+        assert "resent-message" in send_reading_email(
+            current, history, recipient="reader@example.com", sender="news@example.com",
+            api_key="test-key", resend_id=run_id,
+        )
+    assert requests[0]["headers"]["Idempotency-Key"] == requests[1]["headers"]["Idempotency-Key"]
+    assert requests[0]["headers"]["Idempotency-Key"] != requests[2]["headers"]["Idempotency-Key"]
+    assert requests[0]["json"]["subject"] == "本期值得读 · 2026-10-27"
+
+
+def test_resend_does_not_send_an_empty_digest(summaries, monkeypatch):
+    current, history = summaries
+    (current / "horizon-2026-10-28-zh.md").write_text("但没有达到重要性阈值的条目。")
+    monkeypatch.setattr(httpx, "post", lambda *a, **kw: pytest.fail("Unexpected email"))
+    assert send_reading_email(
+        current, history, recipient="reader@example.com", sender="news@example.com",
+        api_key="test-key", resend_id="run-1",
+    ) == "No reading list to send"
+
+
 def test_cli_uses_configured_email_addresses(summaries, monkeypatch):
     current, history = summaries
     (current / "horizon-2026-10-28-zh.md").write_text("# Reading")
