@@ -295,7 +295,6 @@
     "default_profile": "reading",
     "profile_settings": {
       "reading": {
-        "threshold": 7.5,
         "topic_dedup": false
       }
     }
@@ -304,21 +303,7 @@
     "max_items": 5,
     "profile_order": [
       "reading"
-    ],
-    "category_groups": {
-      "engineering": {
-        "limit": 3,
-        "categories": [
-          "engineering"
-        ]
-      },
-      "life": {
-        "limit": 3,
-        "categories": [
-          "life"
-        ]
-      }
-    }
+    ]
   },
   "display": {
     "icon_style": "ascii"

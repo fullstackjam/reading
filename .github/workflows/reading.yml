@@ -78,7 +78,7 @@ jobs:
                   summary.write_text(previous)
               else:
                   summary.unlink()
-              print('No articles passed the threshold; keep the existing reading lists')
+              print('No eligible articles; keep the existing reading lists')
           elif not summary.exists() or summary.stat().st_mtime < now.timestamp():
               print('No new digest was generated; keep the published reading list unchanged')
           state.write_text(json.dumps({'completed_at':now.isoformat()},indent=2)+'\n')

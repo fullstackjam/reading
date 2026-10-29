@@ -235,6 +235,35 @@ def test_profile_without_threshold_bypasses_score_filter() -> None:
     assert orchestrator.passes_profile_filter(make_item("item", 1.0, "ai"))
 
 
+def test_profile_without_threshold_rejects_failed_analysis() -> None:
+    orchestrator = make_orchestrator(DigestConfig())
+    orchestrator.config.processing.profile_settings = {}
+    item = make_item("failed", 1.0, "ai")
+    item.processing.analysis = ContentAnalysis(score=None, reason="Analysis failed", summary=item.title)
+
+    assert not orchestrator.passes_profile_filter(item)
+
+
+@pytest.mark.parametrize("scores,expected", [
+    ([5.0, 7.0, 3.0, 6.0, 4.0, 2.0], [7.0, 6.0, 5.0, 4.0, 3.0]),
+    ([5.0, 6.0], [6.0, 5.0]),
+])
+def test_reading_config_selects_top_scores_without_threshold_or_category_caps(scores, expected) -> None:
+    config = Config.model_validate_json(
+        (Path(__file__).resolve().parents[1] / "data/reading.json").read_text()
+    )
+    orchestrator = make_orchestrator(config.digest)
+    orchestrator.config = config
+    orchestrator.profiles = ProfileRegistry.load(
+        Path(__file__).resolve().parents[1] / "profiles", "reading"
+    )
+    items = [make_item(str(index), score, "engineering", profile="reading") for index, score in enumerate(scores)]
+
+    result = asyncio.run(orchestrator.filter_items(items, log=False))
+
+    assert [item.processing.analysis.score for item in result.items] == expected
+
+
 def test_rejects_settings_for_unknown_profile() -> None:
     config = Config(
         ai=AIConfig(
