@@ -1,7 +1,7 @@
 # 阅读清单邮件推送
 
 使用 Resend 免费版发送阅读清单，发件地址和收件地址由 GitHub Actions Variables 配置。
-现有 GitHub Actions 在工作日北京时间 9:00 启动抓取；网站发布成功后，
+由 cron-job.org 在工作日北京时间 9:00 请求启动 GitHub Actions 抓取；网站发布成功后，
 将新清单、推荐理由、文章链接及本期归档链接发给指定收件人。
 没有新清单或内容与已发布版本一致时跳过。邮件服务若拒绝请求，任务会报错。
 
@@ -16,10 +16,28 @@
 5. 配置完成后先发送一封测试邮件，再核对 Resend 的投递状态及收件箱。
 
 未配置上述 Secret 或 Variables 时，工作流会跳过发信，原有网站更新照常运行。
-重建网页不会触发发信；只有实际执行抓取的定时或手动任务才会发送。
+重建网页不会触发发信；只有实际执行抓取的外部定时触发或手动任务才会发送。
 Resend 使用同一封邮件内容生成的去重键，在 24 小时内避免重试导致重复发信。
 任务重跑时也会将清单与之前发布的版本比较；因此发信失败后如果清单已经发布，
 需要单独补发，重建网页不会自动重试邮件。
+
+## 定时触发
+
+GitHub 自带的 `schedule` 已移除，定时调度由 cron-job.org 管理。
+GitHub Actions 仍负责执行抓取、发布和邮件发送，执行开始时间也受 runner 排队影响。
+任务管理：[Reading list · 工作日 09:00](https://console.cron-job.org/jobs/8746111)。
+
+1. 时区：`Asia/Shanghai`；周一至周五 `09:00`（`0 9 * * 1-5`）。
+2. 请求：`POST https://api.github.com/repos/fullstackjam/reading/actions/workflows/reading.yml/dispatches`。
+3. 请求头：`Accept: application/vnd.github+json`、`Content-Type: application/json`、
+   `Authorization: Bearer <dedicated-token>`。
+4. 请求体：`{"ref":"main","inputs":{"refresh":true}}`。
+5. 专用 fine-grained GitHub token 仅选择 `fullstackjam/reading`，授予 `Actions: Read and write`；
+   token 保存在密码库和 cron-job.org 的请求头中，不放进仓库或 URL。
+
+cron-job.org 请求成功仅代表 GitHub 接受了触发请求。生成和发信是否成功，
+仍需查看 [Reading list 的运行记录](https://github.com/fullstackjam/reading/actions/workflows/reading.yml)。
+当前 token 到期日为 `2027-10-29`；到期前需要在 GitHub 续期并更新 cron-job.org 的请求头。
 
 ## 本地预览
 

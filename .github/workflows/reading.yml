@@ -1,8 +1,6 @@
 name: Reading list
 
 on:
-  schedule:
-    - cron: '0 1 * * 1-5'
   workflow_dispatch:
     inputs:
       refresh:
@@ -53,7 +51,7 @@ jobs:
           fi
       - name: Generate recommendations with Horizon
         id: generate
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.refresh)
+        if: github.event_name == 'workflow_dispatch' && inputs.refresh
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
