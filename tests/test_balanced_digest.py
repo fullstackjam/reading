@@ -245,10 +245,12 @@ def test_profile_without_threshold_rejects_failed_analysis() -> None:
 
 
 @pytest.mark.parametrize("scores,expected", [
-    ([5.0, 7.0, 3.0, 6.0, 4.0, 2.0], [7.0, 6.0, 5.0, 4.0, 3.0]),
-    ([5.0, 6.0], [6.0, 5.0]),
+    ([5.0, 7.0, 3.0, 6.0, 4.0, 2.0], []),
+    ([7.4, 7.5, 7.6], [7.6, 7.5]),
+    ([9.1, 8.2, 7.6, 7.8, 9.4, 8.8], [9.4, 9.1, 8.8, 8.2, 7.8]),
+    ([8.0, 7.7], [8.0, 7.7]),
 ])
-def test_reading_config_selects_top_scores_without_threshold_or_category_caps(scores, expected) -> None:
+def test_reading_config_selects_up_to_five_above_baseline_without_category_caps(scores, expected) -> None:
     config = Config.model_validate_json(
         (Path(__file__).resolve().parents[1] / "data/reading.json").read_text()
     )

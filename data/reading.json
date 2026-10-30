@@ -400,6 +400,7 @@
     "default_profile": "reading",
     "profile_settings": {
       "reading": {
+        "threshold": 7.5,
         "topic_dedup": false
       }
     }
