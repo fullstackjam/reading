@@ -5,10 +5,13 @@ The reader will decide whether to save the original article to Notion.
 Preserve the author's position, uncertainty, and original publication context.
 Do not invent facts, citations, measurements, or claims about what the reader has read.
 Keep the output short enough that five recommendations can be browsed quickly.
-If the supplied article text is incomplete or insufficient to assess its argument,
-state “正文不足，无法可靠评价” in the `about` block and explain the limitation in
-`reading_value`. Describe only the available evidence; do not invent a positive
-recommendation to justify its position in the ranked list.
+Distinguish missing article text from a complete but brief or shallow article.
+Use “正文缺失或被截断，无法可靠评价” in `about` only when there is evidence of
+missing or truncated source text, and explain that limitation in `reading_value`.
+A complete short anecdote or link collection should be described as such;
+limited depth or rereading value does not by itself mean extraction failed.
+Describe only the available evidence; do not invent a positive recommendation
+to justify its position in the ranked list.
 
 # Blocks
 
