@@ -3,41 +3,41 @@
 <title>给自己留一点阅读时间 · Jam's Reading List</title><meta name="description" content="一些值得认真读，也值得以后重读的文章。">
 <link rel="stylesheet" href="/style.css"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='.9em' font-size='56'%3E📖%3C/text%3E%3C/svg%3E"></head>
 <body><div class="wrap"><header class="brand"><a class="wordmark" href="/">Jam's Reading List</a><a class="small" href="/archive/">往期清单 ↗</a></header>
-<main><p class="eyebrow">本期候选 · 2026-10-27</p><h1>给自己留一点阅读时间</h1>
+<main><p class="eyebrow">本期候选 · 2026-10-30</p><h1>给自己留一点阅读时间</h1>
 <p class="intro">一些值得认真读，也值得以后重读的文章。先看看推荐理由，再决定打开原文、读一读，或者收进自己的阅读清单。</p>
 <article><blockquote>
-<p>从 16 篇候选中选出 3 篇值得读的文章。</p>
+<p>从 3 篇候选中选出 3 篇值得读的文章。</p>
 </blockquote>
 <hr />
 <p><strong>本期值得读</strong></p>
 <ol>
-<li><a href="#item-reading-1">跨请求 KV 缓存暴露：GLM-5.3 事件与 SGLang 修复</a> ⭐️ 8.8/10</li>
-<li><a href="#item-reading-2">单租户 Titus：多租户容器平台上的虚拟机级隔离</a> ⭐️ 8.7/10</li>
-<li><a href="#item-reading-3">拆掉之后仍会重建：嵌套 NSHostingView 的白屏排查</a> ⭐️ 8.6/10</li>
+<li><a href="#item-reading-1">Cloudflare DDoS 威胁报告 2026 Q3：更多“蜂群”，更少“巨兽”</a> ⭐️ 5.2/10</li>
+<li><a href="#item-reading-2">游戏</a> ⭐️ 2.8/10</li>
+<li><a href="#item-reading-3">学习周刊总第 287 期：七个开源项目的一句话清单</a> ⭐️ 2.5/10</li>
 </ol>
 <hr />
 <h2>本期值得读</h2>
 <p><a id="item-reading-1"></a></p>
-<h3><a href="https://blog.cloudflare.com/kv-cache-exposure-remediation/">跨请求 KV 缓存暴露：GLM-5.3 事件与 SGLang 修复</a> ⭐️ 8.8/10</h3>
-<p>Cloudflare 复盘 GLM-5.3 在 Workers AI 上的租户隔离事件：预填充 KV 池小于上下文长度，叠加 SGLang 拒绝路径缺陷，使部分超长提示的响应可能读到他人缓存页。作者认为配置检查与引擎修复缺一不可，并推动上游加固。</p>
-<p>rss · Cloudflare Blog · 10月26日 22:01 · 网页正文提取</p>
-<p><strong>「为什么值得读」</strong> 文章把事故还原成可复用的故障链：预填充 KV 池小于上下文，超长请求被换成单 token 占位后仍获准入，预填充只传一页，解码却按保留的多页读取，旧页因此进入响应。更值得记住的是测试缺口——只验 HTTP 状态与吞吐，不验输出一致性——以及用池大小核对、准入拒绝、延迟释放和跨节点校验逐层兜底。这些关于页所有权与分布式状态一致性的教训，多年后仍适用于推理系统运维。</p>
-<p><strong>「什么时候再读」</strong> 当你设计或审计分离式预填充/解码的 KV 缓存、排查跨请求数据串页，或评估 SGLang 升级时需要回看。注意文中版本与 PR 状态截至 2026 年 10 月，具体补丁需按当前发布核对。</p>
-<p><strong>标签</strong>: <code>#distributed-systems</code>, <code>#kv-cache</code>, <code>#security-incident</code>, <code>#inference-infrastructure</code>, <code>#postmortem</code></p>
+<h3><a href="https://blog.cloudflare.com/ddos-threat-report-2026-q3/">Cloudflare DDoS 威胁报告 2026 Q3：更多“蜂群”，更少“巨兽”</a> ⭐️ 5.2/10</h3>
+<p>Cloudflare 2026 年第三季度 DDoS 报告称，网络层攻击数量同比激增，短时、低带宽的“蜂群”式攻击成为主体；超过 1 Tbps 的超容量攻击下降，反射放大向量从 CLDAP 急转向 DNS 与 UDP，攻击目标在行业和地域上扩散。</p>
+<p>rss · Cloudflare Blog · 10月29日 12:55 · 网页正文提取</p>
+<p><strong>「为什么值得读」</strong> 最有用的是把“小攻击”放回运营现实：96% 的攻击在 10 分钟内结束、98% 低于 1 Gbps，人工响应往往来不及；CLDAP 环比骤降 99.5%、DNS 放大增 215%、UDP 增 122%，呈现清晰的向量迁移。作者对超容量攻击下降与执法行动的关联保持“可能”措辞，这一点值得留意。局限也明显：缺少方法论与测量口径，结尾偏产品推广，长期更像季度快照，而非耐久分析。</p>
+<p><strong>「什么时候再读」</strong> 当你需要设定短时低频 DDoS 的防护阈值，或想追踪 CLDAP 崩溃后 DNS/UDP 放大是否延续时，可重读。引用其数字前，需记得这是供应商口径下的 2026 年第三季度遥测，且缺少独立验证。</p>
+<p><strong>标签</strong>: <code>#DDoS</code>, <code>#threat intelligence</code>, <code>#internet security</code>, <code>#botnets</code>, <code>#Cloudflare</code></p>
 <hr />
 <p><a id="item-reading-2"></a></p>
-<h3><a href="https://netflixtechblog.com/single-tenant-titus-vm-level-isolation-on-a-multi-tenant-container-platform-6d8b1909d163?source=rss----2615bd06b42e---4">单租户 Titus：多租户容器平台上的虚拟机级隔离</a> ⭐️ 8.7/10</h3>
-<p>Netflix 团队解释：Titus 的多租户共享内核无法用 cgroup 隔离末级缓存、内存带宽、软中断和流量整形锁等资源，少数流处理负载因此受干扰；单租户模式让一个任务独占按规格选择的 EC2 节点，同时保留原有 API 与托管体验。</p>
-<p>rss · Netflix TechBlog · 10月22日 22:19 · RSS 内容（网页获取失败）</p>
-<p><strong>「为什么值得读」</strong> 最值得读的是取舍过程而非功能说明：作者逐项比较继续调优共享内核、microVM、gVisor 和直接迁到 EC2，说明 microVM 受裸金属/嵌套虚拟化与自维护虚拟化层限制，gVisor 对 IO 重负载加税，EC2 又把运维还给应用团队。文章还指出单租户虽牺牲启动速度和资源余量，却因取消反亲和分散让剩余共享节点装得更满；这种把隔离需求、调度与成本一起算的推理多年后仍可迁移。</p>
-<p><strong>「什么时候再读」</strong> 当你判断高吞吐、状态化负载是否该迁到独占节点，或设计隔离基准与容量取舍时，可重读。文中未给出具体测量值，成本归因和路线图多为作者主张，部分限制带有 Netflix 当时环境的时间性。</p>
-<p><strong>标签</strong>: <code>#container isolation</code>, <code>#multi-tenancy</code>, <code>#platform engineering</code>, <code>#noisy neighbor</code>, <code>#virtualization</code></p>
+<h3><a href="https://www.kawabangga.com/posts/7446">游戏</a> ⭐️ 2.8/10</h3>
+<p>正文不足，无法可靠评价。短文只记录通勤路上的一段对话：作者自称爱玩《艾尔登法环》《血源诅咒》《黑暗之魂》等魂系游戏，伴侣却说他平时玩的是《潜水员戴夫》《马力欧赛车》。全文仅数行，除游戏名外无展开。</p>
+<p>rss · 卡瓦邦噶！ · 10月29日 10:37 · 网页正文提取</p>
+<p><strong>「为什么值得读」</strong> 可读的只有那点自嘲：人对自己游戏口味的描述，与伴侣观察到的实际习惯之间存在明显落差。这个落差本身有点好笑，但文章没有展开，既没有解释原因，也没有具体例子或反思，因此无法据此判断任何观点，也很难说有什么多年后仍然有用的东西。若想了解作者真正的游戏趣味，这篇能提供的证据只是几个游戏名。</p>
+<p><strong>「什么时候再读」</strong> 几乎不必重读。只有当你和朋友聊起“自述口味与实际习惯的差距”这类日常玩笑时，可以把它当作一个很短的话头；它不提供更多内容。</p>
+<p><strong>标签</strong>: <code>#gaming</code>, <code>#personal anecdote</code>, <code>#humor</code>, <code>#slice-of-life</code></p>
 <hr />
 <p><a id="item-reading-3"></a></p>
-<h3><a href="https://onevcat.com/2026/10/nested-hosting-view/">拆掉之后仍会重建：嵌套 NSHostingView 的白屏排查</a> ⭐️ 8.6/10</h3>
-<p>Prowl 的 Canvas 卡片莫名白屏。王巍从日志发现：外层 NSViewRepresentable 已被 dismantle，嵌套其中的 NSHostingView 却仍挂在 window 上照常刷新事务，把退场的 root view 重建了一遍，多出来的宿主抢走了共享的终端视图。文章用版本二分、变体表和最小复现确认了这条链路，并给出两层修复。</p>
-<p>rss · OneV's Den · 10月24日 06:00 · 网页正文提取</p>
-<p><strong>「为什么值得读」</strong> 真正有价值的是那条反直觉的因果链：一个空的 .task {} 就能让退场的树多建一次宿主，但根因不在 .task，而在 NSViewRepresentable 里套 NSHostingView。作者把猜测逐条做成可验证的实验——变体对照表、最小复现仓库、调用栈——再给出两层修复：在 dismantleNSView 里拆掉内层 hosting view，以及把 surface 所有权改成以 window 为准。“makeNSView 被调用不等于会上屏”这个判断长期有用。</p>
-<p><strong>「什么时候再读」</strong> 当你的 NSViewRepresentable 里嵌了 NSHostingView，或 makeNSView 出现意外副作用时，可回来对照这条排查路径。注意它基于 2026 年的 SwiftUI 行为；至于 .task 为何触发那次布局，作者也未解释。</p>
-<p><strong>标签</strong>: <code>#SwiftUI</code>, <code>#AppKit</code>, <code>#debugging</code>, <code>#view lifecycle</code>, <code>#software engineering</code></p>
+<h3><a href="https://wiki.eryajf.net/pages/f7ca02/">学习周刊总第 287 期：七个开源项目的一句话清单</a> ⭐️ 2.5/10</h3>
+<p>这是《学习周刊》总第 287 期，主体是七个开源工具的单行简介，涵盖终端、认证、SQL 工作区、Claude Code 会话管理等，每条仅一两句功能描述。全篇无论证、取舍比较与使用经验，正文不足，无法可靠评价。</p>
+<p>rss · 二丫讲梵 · 10月29日 23:10 · 网页正文提取</p>
+<p><strong>「为什么值得读」</strong> 严格说，这篇不适合细读。可用之处仅是七个仓库链接和每项一句话的定位：如用 GPUI 写的 Rust 终端、靠 App Store 服务端通知驱动的订阅面板、在单窗口内并行监控多个 Claude Code 会话的工具。这些描述停留在功能罗列，未说明适用边界、性能或维护状况，也无作者亲测经验；写于 2026 年 10 月，工具迭代后描述易过时。可当项目线索扫一眼，不足以据此判断是否投入。</p>
+<p><strong>「什么时候再读」</strong> 想为某个具体场景（如多项目 Claude Code 并行、Go 服务的 OIDC 接入）寻找现成开源实现时，可以回来翻这几条链接；但需自行核实仓库现状，简介可能已过时。</p>
+<p><strong>标签</strong>: <code>#link-collection</code>, <code>#newsletter</code>, <code>#open-source-projects</code>, <code>#developer-tools</code></p>
 <hr /></article></main><footer>这是候选阅读清单，模型推荐仅供参考。收录由我自己决定。<br>由 <a href="https://github.com/Thysrael/Horizon">Horizon</a> 整理 · <a href="https://github.com/fullstackjam/reading">源码与订阅配置</a></footer></div></body></html>
